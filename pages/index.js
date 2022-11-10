@@ -5,12 +5,7 @@ import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 
 
-function HomePage() {
-  const estilosDaHomePage = {
-    // backgroundColor: "red"
-  };  
-  console.log(config.playlists);
-  
+function HomePage() {  
   return (
     <>
      <CSSReset />
