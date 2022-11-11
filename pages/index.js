@@ -1,13 +1,22 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
-import Menu from "../src/components/Menu";
+import Menu from "../src/components/Menu/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 
 
+
 function HomePage() {  
+  // const estilosDaHomePage = {
+
+  // };
+
+  const [valorDoFiltro, setValorDoFiltro] = React.useState("");
+
   return (
     <>
+    
      <CSSReset />
             <div style={{
                 display: "flex",
@@ -15,12 +24,12 @@ function HomePage() {
                 flex: 1,
                 // backgroundColor: "red",
             }}>
-        <Menu/>
+        <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
         <Header/>
-        <Timeline playlists={config.playlists}>
+        <Timeline searchValue={valorDoFiltro} playlists={config.playlists}>
+          Conteúdo
         </Timeline>
       </div>
-    
     </>
     );
   }
@@ -36,7 +45,22 @@ function HomePage() {
 
 
   const StyledHeader = styled.div`
-    img{
+    .banner{
+      position: relative;
+      width: 100%;
+      height: 300px;
+      top:56px; 
+      z-index: -1;
+
+    }
+    .banner img{
+      padding: 1px;
+      width: 1920px;
+      height:300px;
+      
+}
+
+    section.user-info > img{
       width: 80px;
       height:80px;
       border-radius:50%;
@@ -54,9 +78,9 @@ function HomePage() {
   function Header(){
     return(
       <StyledHeader>
-        {/* <img src="banner"/> */}
-
-
+        <div className="banner">
+          <img src={`https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80`}/>
+        </div>
         <section className="user-info">
           <img src={`https://github.com/${config.github}.png`}/>
           <div>
@@ -65,39 +89,51 @@ function HomePage() {
           </div>
         </section>
       </StyledHeader>
-    );
+    )
   }
-  function Timeline(props){ // poderiamos chamr qualquer outro nome, tipo propriedades, usamos props por convensão
-    console.log("Dentro do componente", props.playlists);
+
+  function Timeline({searchValue,...props}){ // poderiamos chamr qualquer outro nome, tipo propriedades, usamos props por convensão
+    // console.log("Dentro do componente", props.playlists);
     const playlistNames = Object.keys(props.playlists);
+
     return(
       <StyledTimeline>
         {playlistNames.map((playlistName) => {
           const videos = props.playlists[playlistName];
           
-          console.log(playlistName);
-          console.log(videos);
+          // console.log(playlistName);
+          // console.log(videos);
+
 
           return (
-            <section>
+            <section key={playlistName}>
               <h2>{playlistName}</h2>
               <div>
-                 {videos.map((video) => {
-            return (
-              <a href={video.url}>
-                <img src={video.thumb}/>
-                <span>
-                  {video.title}
-                </span>
-              </a>
-            )
+                 {videos
+                 .filter((video) => {
+                    const titleNormalized = toString(video.title).toLowerCase();
+                    const searchValueNormalized = toString(searchValue).toLowerCase();
+                    return titleNormalized.includes(searchValueNormalized)
+                 })
+                 .map((video) => {
+                    return (
+                      <a key={video.url} href={video.url}>
+                        <img src={video.thumb}/>
+                        <span>
+                          {video.title}
+                        </span>
+                      </a>
+                    )
     
             })}
         </div>
       
+
             </section>
           )
            })}
+
+           
       </StyledTimeline>
     );
   }
