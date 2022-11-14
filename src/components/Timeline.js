@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const StyledTimeline = styled.div`
+  
+  
   flex: 1;
   width: 100%;
   padding: 16px;
@@ -32,7 +34,29 @@ export const StyledTimeline = styled.div`
       grid-auto-flow: column;
       grid-auto-columns: minmax(200px,1fr);
       overflow-x: scroll;
-      scroll-snap-type: x mandatory;
+      
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: ${({theme})=>theme.textColorBase};
+        border-radius: 5px;
+      }
+      
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background-color: ${({theme})=> theme.backgroundBase};    /* color of the scroll thumb */
+        border-radius: 10px;
+        border: 2px solid;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: black; 
+      }
+            
       a {
         scroll-snap-align: start;
         span {
@@ -43,5 +67,7 @@ export const StyledTimeline = styled.div`
         }
       }
     }
+    
   }
+  
 `;

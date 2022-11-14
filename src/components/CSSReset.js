@@ -10,7 +10,22 @@ export const CSSReset = createGlobalStyle`
   body {
     font-family: sans-serif;
     overflow-x: hidden;
+    color: ${({theme}) => theme.textColorBase};
+    background-color: ${({theme}) => theme.backgroundBase};
   }
+  body::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: ${({theme})=>theme.textColorBase};        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: ${({theme})=> theme.backgroundBase};    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 2px solid;  /* creates padding around scroll thumb */
+}
   /* NextJS */
   html {
     display: flex;
@@ -21,6 +36,9 @@ export const CSSReset = createGlobalStyle`
     display: flex;
     flex: 1;
   }
+
+  
+  
   #__next {
     display: flex;
     flex: 1;
