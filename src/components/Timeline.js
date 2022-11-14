@@ -52,11 +52,7 @@ export const StyledTimeline = styled.div`
         border: 2px solid;
       }
 
-      /* Handle on hover */
-      ::-webkit-scrollbar-thumb:hover {
-        background: black; 
-      }
-            
+     
       a {
         scroll-snap-align: start;
         span {
